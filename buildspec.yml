@@ -12,19 +12,19 @@ phases:
     commands:
       - echo "Connecting to Docker registry"
       - aws --version
-      - aws ecr get-login-password --region eu-west-3 | docker login --username AWS --password-stdin 494713367427.dkr.ecr.eu-west-3.amazonaws.com
+      - aws ecr get-login-password --region eu-west-3 | docker login --username AWS --password-stdin $AWS_ACCOUNT_ID.dkr.ecr.eu-west-3.amazonaws.com
       - echo "Pre-build phase completed."
   build:
     commands:
       - echo "Building the code and Docker image"
-      - docker build -t dhaneesh .
+      - docker build -t $DOCKER_NAME .
       - echo "docker image build completed"
   
   post_build:
     commands:
       - echo "change the tag of image"
-      - docker tag dhaneesh:latest 494713367427.dkr.ecr.eu-west-3.amazonaws.com/dhaneesh:latest
-      - docker push 494713367427.dkr.ecr.eu-west-3.amazonaws.com/docker:latest
+      - docker tag $DOCKER_NAME:latest $AWS_ACCOUNT_ID.dkr.ecr.eu-west-3.amazonaws.com/$DOCKER_NAME:latest
+      - docker push $AWS_ACCOUNT_ID.dkr.ecr.eu-west-3.amazonaws.com/$DOCKER_NAME:latest
 
 artifacts:
   files:
