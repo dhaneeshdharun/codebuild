@@ -25,3 +25,7 @@ phases:
       - echo "change the tag of image"
       - docker tag dhaneesh:latest 494713367427.dkr.ecr.eu-west-3.amazonaws.com/dhaneesh:latest
       - docker push 494713367427.dkr.ecr.eu-west-3.amazonaws.com/docker:latest
+
+artifacts:
+  files:
+    - target/*war
