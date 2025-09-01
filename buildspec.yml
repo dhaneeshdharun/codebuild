@@ -25,7 +25,3 @@ phases:
       - echo "change the tag of image"
       - docker tag $DOCKER_NAME:latest $AWS_ACCOUNT_ID.dkr.ecr.eu-west-3.amazonaws.com/$DOCKER_NAME:latest
       - docker push $AWS_ACCOUNT_ID.dkr.ecr.eu-west-3.amazonaws.com/$DOCKER_NAME:latest
-
-artifacts:
-  files:
-    - target/*war
