@@ -8,10 +8,13 @@ phases:
       - echo "Installing the dependencies"
       - apt-get update -y
       - apt-get install -y unzip
+      - export AWS_ACCOUNT_ID=$AWS_ACCOUNT_ID
+      - export DOCKER_NAME=$DOCKER_NAME
   pre_build:
     commands:
       - echo "Connecting to Docker registry"
       - aws --version
+
       - aws ecr get-login-password --region eu-west-3 | docker login --username AWS --password-stdin $AWS_ACCOUNT_ID.dkr.ecr.eu-west-3.amazonaws.com
       - echo "Pre-build phase completed."
   build:
@@ -23,7 +26,7 @@ phases:
   post_build:
     commands:
       - echo "change the tag of image"
-      - docker tag $DOCKER_NAME:latest $AWS_ACCOUNT_ID.dkr.ecr.eu-west-3.amazonaws.com/$DOCKER_NAME:latest
+      - docker tag $DOKC:latest $AWS_ACCOUNT_ID.dkr.ecr.eu-west-3.amazonaws.com/$DOCKER_NAME:latest
       - docker push $AWS_ACCOUNT_ID.dkr.ecr.eu-west-3.amazonaws.com/$DOCKER_NAME:latest
 
 artifacts:
